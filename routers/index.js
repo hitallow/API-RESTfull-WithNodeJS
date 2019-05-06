@@ -5,5 +5,5 @@ module.exports = (app) => {
         response.setHeader('Content-type', 'text/html');
         response.end("<h1>Você está acessando a pasta raiz</h1>");
 
-    })
-};
+    });
+}
