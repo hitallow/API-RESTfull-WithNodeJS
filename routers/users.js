@@ -14,6 +14,10 @@ module.exports = app =>{
             }]
         });
     }); 
+    app.post('/users/', (request, response)=>{
+       
+        response.json(request.body);
+    }); 
     
     // rota do tipo get
     app.get('/users/admin',(request , response)=>{
