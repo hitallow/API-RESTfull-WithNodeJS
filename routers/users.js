@@ -1,32 +1,33 @@
-const express = require("express");
-const routes = express.Router();
 
 
-routes.get('/users', (request, response)=>{
-    response.statusCode = 200;
-    response.setHeader('Content-type', "application/json");
-    response.json({
-        users: [{
-            name: 'Hitallo',
-            email: 'email@dominio.com',
-            id: 1
-        }]
+// exporto todo meu documento para poder ser utilizado por outros arquivos JS
+module.exports = app =>{
+    // rota do tipo get
+    app.get('/users/', (request, response)=>{
+        response.statusCode = 200;
+        response.setHeader('Content-type', "application/json");
+        response.json({
+            users: [{
+                name: 'Hitallo',
+                email: 'email@dominio.com',
+                id: 1
+            }]
+        });
+    }); 
+    
+    // rota do tipo get
+    app.get('/users/admin',(request , response)=>{
+        response.statusCode = 200;
+        response.setHeader('Content-type','application/json');
+        response.json({
+            admin:[{
+                name:"Admin",
+                email:'email@admin.com',
+                id: 2
+    
+            }]
+        })
     });
-}); 
 
 
-routes.get('/users/admin',(request , response)=>{
-    response.statusCode = 200;
-    response.setHeader('Content-type','application/json');
-    response.json({
-        admin:[{
-            name:"Admin",
-            email:'email@admin.com',
-            id: 2
-
-        }]
-    })
-});
-
-
-module.exports = routes;
+};
