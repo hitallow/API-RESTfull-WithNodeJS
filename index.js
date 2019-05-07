@@ -14,8 +14,13 @@ const app = express();
 app.use(bodyParser.json());
 // usando bodyParser para enteder urlEnconded
 app.use(bodyParser.urlencoded({extended:false}));
-// incluo a pasta routes na minha app
-consign().include('routers').into(app);
+/* 
+    faz o autoload dos modulos 
+    dentro da variavel passada ele cria um atributo que pode ser acessado
+
+*/
+
+consign().include('routers').include('utils').into(app);
 
 // app está ouvindo 
 app.listen(3000, '127.0.0.1', () => {
