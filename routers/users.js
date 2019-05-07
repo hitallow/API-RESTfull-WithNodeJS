@@ -58,6 +58,8 @@ module.exports = app => {
             }]
         })
     });
+
+    // rotas recebendo id como parametro
     const routeId = app.route('/users/:id');
     routeId.get((request, response) => {
         db.findOne({ _id: request.params.id }).exec((error, user) => {
@@ -71,17 +73,27 @@ module.exports = app => {
         });
     });
 
-    routeId.put((request , response)=>{
-        
-        db.update({ _id : request.params.id }, request.body, error=>{
-            if(error){
+    routeId.put((request, response) => {
+
+        db.update({ _id: request.params.id }, request.body, error => {
+            if (error) {
                 app.utils.error.send(error, request, response);
-            }else{
+            } else {
                 response.status(200).json(
-                    request.body
+                    Object.assign(request.params, request.body)
                 );
             }
-
+        });
+    });
+    routeId.delete((request, response) => {
+        db.remove({ _id: request.params.id }, {}, error => {
+            if (error) {
+                app.util.error.send(error, request, response);
+            } else {
+                response.status(200).json({
+                    id: request.params.id
+                });
+            }
         });
 
     });
