@@ -17,7 +17,7 @@ module.exports = app => {
 
         db.find({}).sort({ name: 1 }).exec((error, users) => {
             if (error) {
-                app.utils.error(error, request, reponse);
+                app.utils.error.send(error, request, response);
             } else {
                 response.status(200);
                 response.json({
@@ -37,7 +37,7 @@ module.exports = app => {
          */
         db.insert(request.body, (error, user) => {
             if (error) {
-                app.utils.error(error, request, reponse);
+                app.utils.error.send(error, request, response);
             } else {
                 response.status(200).json(user);
             }
@@ -62,13 +62,28 @@ module.exports = app => {
     routeId.get((request, response) => {
         db.findOne({ _id: request.params.id }).exec((error, user) => {
             if (error) {
-                app.utils.error(error, request, reponse);
+                app.utils.error.send(error, request, response);
             } else {
                 response.status(200).json(
                     { user }
                 );
             }
         });
+    });
+
+    routeId.put((request , response)=>{
+        
+        db.update({ _id : request.params.id }, request.body, error=>{
+            if(error){
+                app.utils.error.send(error, request, response);
+            }else{
+                response.status(200).json(
+                    request.body
+                );
+            }
+
+        });
+
     });
 
 
