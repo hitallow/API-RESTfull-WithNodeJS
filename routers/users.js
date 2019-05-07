@@ -13,8 +13,6 @@ module.exports = app => {
     const route = app.route("/users");
     // rota do tipo get
     route.get((request, response) => {
-
-
         db.find({}).sort({ name: 1 }).exec((error, users) => {
             if (error) {
                 app.utils.error.send(error, request, response);
@@ -30,6 +28,10 @@ module.exports = app => {
 
     // exemplo de rota post
     route.post((request, response) => {
+        
+        if(!app.utils.validator.user(app, request, response)) {
+            return false;
+        }
         /*
              faz o insert do objeto JSON passado como primeiro parametro, o segundo parametro 
             é uma função CALLBACK, que recebe o erro (caso haja) e o 
@@ -73,8 +75,8 @@ module.exports = app => {
         });
     });
 
+    // rota de alteração de dados
     routeId.put((request, response) => {
-
         db.update({ _id: request.params.id }, request.body, error => {
             if (error) {
                 app.utils.error.send(error, request, response);
